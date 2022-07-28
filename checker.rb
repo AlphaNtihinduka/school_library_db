@@ -1,0 +1,5 @@
+require './person'
+require_relative './decorator'
+require_relative './nameable'
+require_relative './capitalize'
+require_relative './trimmer'
