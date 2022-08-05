@@ -31,28 +31,38 @@ class App
   end
 
   def create_person # rubocop:disable Metrics/MethodLength
-    puts 'Which type of person you wish to create'
-    puts '1. Student'
-    puts '2. Teacher'
+    puts 'Do you what to create a student(1) or a teacher(2)?'
+    puts '1- Student'
+    puts '2- Teacher'
     print 'Enter selection: '
     person_type = gets.chomp.to_i
+    case person_type
+    when 1 then create_student
+    when 2 then create_teacher
+    end
+  end
+
+  def create_student
     print 'Name: '
     name = gets.chomp
     print 'Age : '
     age = gets.chomp.to_i
-    case person_type
-    when 1
-      print 'Has parent permission? [Y/N]: '
-      permission = gets[0]
-      permission = (permission == ('Y' || 'y'))
-      @persons << Student.new(age, name, parent_permission: permission)
-      puts "Person created successfully \n\n"
-    when 2
-      print 'Specialization: '
-      specialization = gets.chomp
-      @persons << Teacher.new(specialization, age, name)
-      puts "Person created successfully\n\n"
-    end
+    print 'Has parent permission? [Y/N]: '
+    permission = gets[0]
+    permission = (permission == ('Y' || 'y'))
+    @persons << Student.new('Unknown', name, age, parent_permission: permission)
+    puts "Person created successfully \n"
+  end
+
+  def create_teacher
+    print 'Name: '
+    name = gets.chomp
+    print 'Age : '
+    age = gets.chomp.to_i
+    print 'Specialization: '
+    specialization = gets.chomp
+    @persons << Teacher.new(specialization, age, name)
+    puts "Person created successfully\n"
   end
 
   def create_book
@@ -62,16 +72,16 @@ class App
     print 'Author: '
     author = gets.chomp
     @books << Book.new(title, author)
-    puts "Book created successfully\n\n"
+    puts "Book created successfully\n"
   end
 
   def create_rental
     puts 'Create rental'
     puts 'Select a book from the following list by number'
-    @books.each { |book, index| puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}" }
+    @books.each_with_index { |book, index| puts "#{index}. Title: \"#{book.title}\", Author: #{book.author}" }
     book_number = gets.chomp.to_i
     puts 'Select a Person from the following list by number'
-    @persons.each do |person, index|
+    @persons.each_with_index do |person, index|
       puts " #{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
     person_number = gets.chomp.to_i
@@ -86,9 +96,9 @@ class App
     print 'Enter ID of person: '
     person_id = gets.chomp
     puts 'Rentals : '
-    @rentals.each do |rent|
-      if rent.person.id.to_s == person_id.to_s
-        puts "#{rent.class} #{rent.date} | Book: \"#{rent.book.title}\" rented by #{rent.person.name}"
+    @rentals.each do |rental|
+      if rental.person.id.to_s == person_id.to_s
+        puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by: #{rental.person.name}"
       end
     end
   end
