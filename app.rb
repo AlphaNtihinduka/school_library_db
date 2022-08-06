@@ -16,8 +16,8 @@ class App
     if @books.empty?
       puts 'The Library book is empty'
     else
-    puts 'List of all books'
-    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+      puts 'List of all books'
+      @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
     end
   end
 
@@ -25,12 +25,12 @@ class App
     if @books.empty?
       puts 'There are no people in the list'
     else
-    puts 'List of all people'
-    @persons.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
+      puts 'List of all people'
+      @persons.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
     end
   end
 
-  def create_person # rubocop:disable Metrics/MethodLength
+  def create_person
     puts 'Do you what to create a student(1) or a teacher(2)?'
     puts '1- Student'
     puts '2- Teacher'
